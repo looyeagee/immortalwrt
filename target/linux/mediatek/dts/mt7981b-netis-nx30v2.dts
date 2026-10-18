@@ -57,6 +57,16 @@
 			gpios = <&pio 8 GPIO_ACTIVE_LOW>;
 		};
 	};
+
+	reg_usb_vbus: regulator-usb-vbus {
+		compatible = "regulator-fixed";
+		regulator-name = "usb-vbus";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		gpios = <&pio 23 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+		regulator-boot-on;
+	};
 };
 
 &switch {
@@ -76,4 +86,13 @@
 			label = "lan3";
 		};
 	};
+};
+
+&usb_phy {
+	status = "okay";
+};
+
+&xhci {
+	vbus-supply = <&reg_usb_vbus>;
+	status = "okay";
 };
